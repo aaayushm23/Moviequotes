@@ -91,4 +91,4 @@ All endpoints are under `/api/quotes`. Use tools like Postman or curl for testin
 - **Dependencies**: Spring Boot Starter Web, Validation; Kotlin reflect.
 - **GitHub Repo**: https://github.com/aaayushm23/Moviequotes (includes all code and this README).
 
-For questions or issues, refer to the code or open an issue on GitHub.
+
