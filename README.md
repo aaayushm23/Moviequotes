@@ -38,10 +38,27 @@ A simple RESTful API built in Kotlin with Spring Boot for managing and exploring
 
 ## Running Tests
 
-The project includes automated tests covering key logic:
+The project includes automated tests to ensure reliability, covering essential logic with a mix of unit tests (isolated service methods) and integration tests (full API endpoints via MockMvc). Tests handle valid/invalid inputs, edge cases (e.g., empty lists, not found), and key paths. There are 15 tests in total (including the default Spring context load test).
 
-- Unit tests for service methods (e.g., add, delete, search, quote of the day).
-- Integration tests for API endpoints (e.g., valid/invalid inputs, HTTP status codes).
+- **Unit Tests (QuoteServiceTest.kt)**: Focus on isolated business logic in the service layer.
+
+  - `add quote and get by id`: Adds a quote, verifies ID assignment, and retrieves it by ID.
+  - `delete quote`: Adds a quote, deletes it, and confirms it's no longer retrievable.
+  - `search quotes`: Adds multiple quotes, searches by character (substring match), and verifies filtered results.
+  - `quote of the day - empty list`: Returns null when no quotes exist.
+  - `quote of the day - with quotes`: Adds quotes and verifies a quote is returned (date-based selection).
+
+- **Integration Tests (QuoteControllerTest.kt)**: Simulate HTTP requests to endpoints, testing full flow including validation and status codes.
+
+  - `add quote - valid`: POSTs a valid quote, expects 201 Created.
+  - `add quote - invalid`: POSTs with blank fields/invalid year, expects 400 Bad Request.
+  - `get all quotes`: GETs the list, expects 200 OK (empty array initially).
+  - `get quote by id - not found`: GETs non-existent ID, expects 404 Not Found.
+  - `search quotes`: Adds a quote, searches by character, expects 200 OK with matches.
+  - `get daily quote - no content if empty`: GETs daily with no quotes, expects 204 No Content.
+  - `delete quote`: Adds a quote, deletes it (204 No Content), then retries delete (404 Not Found).
+
+- **Default Test (MoviequotesApplicationTests.kt)**: Verifies the Spring application context loads correctly (basic sanity check).
 
 To run tests:
 
@@ -51,7 +68,7 @@ To run tests:
 ```
 
 - Tests use JUnit and Spring Boot Test framework.
-- View results in `build/reports/tests/test/index.html`.
+- View results in `build/reports/tests/test/index.html` (includes pass/fail details, stack traces if any).
 
 ## Endpoints
 
